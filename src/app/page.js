@@ -1,6 +1,30 @@
 import Card from "@/components/card/card";
+import config from "@/config";
 
-export default function Home() {
+const fetchBlogs = async (params) => {
+  //need try catch ici
+  const reqOptions = {
+    headers: {
+      Authorization: `Bearer ${process.env.API_KEY}`,
+    },
+  };
+  const request = await fetch(
+    `${config.api}/api/blogs?populate=*&${params}`,
+    reqOptions
+  );
+  const response = await request.json();
+
+  return response;
+};
+const Home = async () => {
+  // const featuredBlogs = await fetchBlogs(`&filters[isFeatured][$eq]=true`);
+  // const blogs = await fetchBlogs(`&filters[isFeatured][$eq]=false`);
+  const [featuredBlogs, blogs] = await Promise.all([
+    await fetchBlogs(`filters[isFeatured][$eq]=true`),
+    await fetchBlogs(`filters[isFeatured][$eq]=false`),
+  ]);
+  //console.log("🚀 ~ file: page.js:18 ~ Home ~ blogs:", blogs.data);
+
   return (
     <>
       <section className="text-white bg-gray-900">
@@ -17,13 +41,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <div className="grid content-center grid-cols-1 justify-items-center xl:grid-cols-2 2xl:grid-cols-3">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {featuredBlogs.data.map((featuredBlog) => (
+          <Card
+            key={featuredBlog.id}
+            category={featuredBlog.attributes.Category}
+            title={featuredBlog.attributes.Title}
+            summary={featuredBlog.attributes.Summary}
+            href={`${featuredBlog.attributes.slug}`}
+          />
+        ))}
       </div>
     </>
   );
-}
+};
+
+export default Home;
