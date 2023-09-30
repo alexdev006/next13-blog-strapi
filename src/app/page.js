@@ -17,13 +17,11 @@ const fetchBlogs = async (params) => {
   return response;
 };
 const Home = async () => {
-  // const featuredBlogs = await fetchBlogs(`&filters[isFeatured][$eq]=true`);
-  // const blogs = await fetchBlogs(`&filters[isFeatured][$eq]=false`);
+  //const allBlogs = await fetchBlogs();
   const [featuredBlogs, blogs] = await Promise.all([
     await fetchBlogs(`filters[isFeatured][$eq]=true`),
     await fetchBlogs(`filters[isFeatured][$eq]=false`),
   ]);
-  //console.log("🚀 ~ file: page.js:18 ~ Home ~ blogs:", blogs.data);
 
   return (
     <>
@@ -41,15 +39,34 @@ const Home = async () => {
           </div>
         </div>
       </section>
-
-      <div className="grid content-center grid-cols-1 justify-items-center xl:grid-cols-2 2xl:grid-cols-3">
-        {featuredBlogs.data.map((featuredBlog) => (
+      <p className="text-xl font-bold text-white">Featured posts:</p>
+      <div className="grid items-center justify-around grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 ">
+        {featuredBlogs?.data?.map((featuredBlog) => (
           <Card
             key={featuredBlog.id}
             category={featuredBlog.attributes.Category}
             title={featuredBlog.attributes.Title}
             summary={featuredBlog.attributes.Summary}
             href={`${featuredBlog.attributes.slug}`}
+            isFeatured={featuredBlog.attributes.isFeatured}
+            imgSrc={`${config.api}${featuredBlog.attributes.FeaturedImage.data.attributes.url}`}
+            thumbnail={`${config.api}${featuredBlog.attributes.Thumbnail.data.attributes.url}`}
+            createdAt={featuredBlog.attributes.createdAt}
+          />
+        ))}
+      </div>
+      <p className="text-xl font-bold text-white">Posts:</p>
+      <div className="grid items-center justify-around grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 ">
+        {blogs?.data?.map((blog) => (
+          <Card
+            key={blog.id}
+            category={blog.attributes.Category}
+            title={blog.attributes.Title}
+            summary={blog.attributes.Summary}
+            href={`${blog.attributes.slug}`}
+            isFeatured={blog.attributes.isFeatured}
+            imgSrc={`${config.api}${blog.attributes.FeaturedImage.data.attributes.url}`}
+            thumbnail={`${config.api}${blog.attributes.Thumbnail.data.attributes.url}`}
           />
         ))}
       </div>
