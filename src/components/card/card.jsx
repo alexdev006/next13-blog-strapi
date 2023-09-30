@@ -2,7 +2,15 @@ import Image from "next/image";
 
 import DateFormatFr from "@/utils/dateFormat";
 
-const Card = ({ title, category, summary, imgSrc, thumbnail, createdAt }) => {
+const Card = ({
+  title,
+  category,
+  summary,
+  imgSrc,
+  thumbnail,
+  createdAt,
+  href,
+}) => {
   return (
     <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md cursor-pointer dark:bg-gray-800 w-96">
       <Image
@@ -21,7 +29,7 @@ const Card = ({ title, category, summary, imgSrc, thumbnail, createdAt }) => {
             </span>
           </div>
           <a
-            href="#"
+            href={href}
             className="block mt-2 text-xl font-semibold text-gray-800 transition-colors duration-300 transform dark:text-white hover:text-gray-600 hover:underline"
             tabIndex="0"
             role="link"

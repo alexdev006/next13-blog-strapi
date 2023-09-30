@@ -1,11 +1,19 @@
 import Image from "next/image";
 
-const PostDetail = () => {
+import fetchBlogs from "@/utils/fetch-blog";
+import DateFormatFr from "@/utils/dateFormat";
+
+const PostDetail = async (props) => {
+  const blogs = await fetchBlogs(`filters[slug][$eq]=${props.params.slug}`);
+
+  if (blogs.data.length === 0) return null;
+  const blog = blogs.data[0];
+
   return (
     <article className="px-6 mx-auto mt-24 max-w-7xl lg:px-8 sm:mt-32 lg:mt-40 text-slate-200">
       <div className="max-w-2xl mx-auto lg:max-w-none">
         <header className="flex flex-col max-w-5xl mx-auto text-center">
-          <p className="text-xs">- 23 Septembre 2023 -</p>
+          <p className="text-xs">- {DateFormatFr(blog.attributes.date)} -</p>
           <h1 className="mt-6 font-display text-5xl font-medium tracking-tight[text-wrap:balance] sm:text-6x">
             The Future of Web Development: Our Predictions for 2023
           </h1>
@@ -35,15 +43,14 @@ const PostDetail = () => {
             With the launch of Github Copilot in 2022 the industry got its first
             straight into your IDE. Copilot has given thousands of developers.
           </p>
-          <p className="my-10 text-xl">
-            With the launch of Github Copilot in 2022 the industry got its first
-            glimpse at what it would look like to have Stack Overflow plumbed
-            straight into your IDE. Copilot has given thousands of developers
-            what they always longed for: plausible deniability over the bugs
-            they write.
-          </p>
+          {/* SUPER IMPORTANT LA BALISE DANGER..... */}
+          <div
+            className="my-10 text-xl"
+            dangerouslySetInnerHTML={{ __html: blog.attributes.Content }}
+          ></div>
         </div>
-        <div className="mt-24">
+
+        {/* <div className="mt-24">
           <h2 className="mb-5 text-3xl font-bold">2. Rendering Patterns</h2>
           <p className="my-10 text-xl">
             With the launch of Github Copilot in 2022 the industry got its first
@@ -70,7 +77,7 @@ const PostDetail = () => {
             what they always longed for: plausible deniability over the bugs
             they write.
           </p>
-        </div>
+        </div> */}
       </div>
     </article>
   );
