@@ -19,12 +19,11 @@ const fetchBlogs = async (params) => {
 const Home = async () => {
   // const featuredBlogs = await fetchBlogs(`&filters[isFeatured][$eq]=true`);
   // const blogs = await fetchBlogs(`&filters[isFeatured][$eq]=false`);
-  const [featuredBlogs, blogs, allBlogs] = await Promise.all([
+  const [featuredBlogs, blogs] = await Promise.all([
     await fetchBlogs(`filters[isFeatured][$eq]=true`),
     await fetchBlogs(`filters[isFeatured][$eq]=false`),
-    await fetchBlogs(),
   ]);
-  console.log("🚀 ~ file: page.js:18 ~ Home ~ blogs:", blogs.data);
+  //console.log("🚀 ~ file: page.js:18 ~ Home ~ blogs:", blogs.data);
 
   return (
     <>
@@ -43,22 +42,19 @@ const Home = async () => {
         </div>
       </section>
 
-      <div className="grid content-center grid-cols-1 mx-auto justify-items-center xl:grid-cols-2 2xl:grid-cols-3">
-        {allBlogs.data.map((featuredBlog) => (
+      <div className="grid content-center grid-cols-1 justify-items-center xl:grid-cols-2 2xl:grid-cols-3">
+        {featuredBlogs.data.map((featuredBlog) => (
           <Card
             key={featuredBlog.id}
             category={featuredBlog.attributes.Category}
             title={featuredBlog.attributes.Title}
             summary={featuredBlog.attributes.Summary}
             href={`${featuredBlog.attributes.slug}`}
-            isFeatured={featuredBlog.attributes.isFeatured}
           />
         ))}
       </div>
     </>
   );
 };
-
-//mx-auto max-w-screen-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8 lg:pt-24
 
 export default Home;

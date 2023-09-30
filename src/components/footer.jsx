@@ -32,9 +32,9 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-gray-900">
-      <div className="max-w-screen-xl pt-16 pb-8 mx-auto sm:px-6 lg:pt-24">
-        <div className="pt-8 mt-16 border-t border-gray-100 sm:flex sm:items-center sm:justify-between lg:mt-24">
+    <footer className="bg-gray-900 w-full">
+      <div className="mx-auto max-w-screen-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+        <div className="mt-16 border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between lg:mt-24">
           <ul className="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
             {siteLinks.map((link) => (
               <Link
@@ -47,7 +47,7 @@ const Footer = () => {
             ))}
           </ul>
 
-          <ul className="flex justify-center gap-6 mt-8 sm:mt-0 lg:justify-end">
+          <ul className="mt-8 flex justify-center gap-6 sm:mt-0 lg:justify-end">
             {socialMediaList.map((media) => (
               <Link key={media.label} href={media.path}>
                 {media.icon}
