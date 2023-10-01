@@ -26,7 +26,7 @@ const Home = async () => {
         </div>
       </section>
       <p className="text-xl font-bold text-white">Featured posts:</p>
-      <div className="grid items-center justify-around grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 ">
+      <div className="grid items-center justify-center grid-cols-1 border xl:grid-cols-2 2xl:grid-cols-3">
         {featuredBlogs?.data?.map((featuredBlog) => (
           <Card
             key={featuredBlog.id}

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 
 import DateFormatFr from "@/utils/dateFormat";
 
@@ -24,7 +25,13 @@ const Card = ({
       <div className="p-6">
         <div>
           <div className="flex flex-wrap gap-1 mt-4">
-            <span className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600">
+            <span
+              className={twMerge(
+                "whitespace-nowrap rounded-full bg-purple-300 px-2.5 py-0.5 text-xs text-purple-800",
+                category === "Bricolage" ? "bg-lime-300 text-lime-800" : "",
+                category === "Jeux video" ? "bg-orange-300 text-orange-800" : ""
+              )}
+            >
               {category}
             </span>
           </div>

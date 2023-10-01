@@ -6,6 +6,7 @@ const Navbar = () => {
     { label: "Dev", path: "/dev" },
     { label: "Bricolage", path: "/brico" },
     { label: "Jv", path: "/video-games" },
+    { label: "Contact", path: "/contact" },
   ];
   return (
     <div className="text-lime-300 text-center ">
